@@ -1,23 +1,14 @@
 package com.example.demo.service;
 
-import org.apache.ibatis.type.MappedTypes;
 import org.apache.poi.common.usermodel.HyperlinkType;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import com.example.demo.mybatis.mapper.TableMapper;
 import com.example.demo.mybatis.model.TableDetail;
 import com.example.demo.mybatis.model.TableEntity;
 import com.example.demo.mybatis.service.TableService;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,8 +17,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class ExcelExportService {
@@ -387,43 +376,53 @@ public class ExcelExportService {
         // COMMENT_DEFAULTS.put("create_by", "Người tạo bản ghi");
         // COMMENT_DEFAULTS.put("update_date", "Thời điểm thực hiện cập nhật bản ghi");
         // COMMENT_DEFAULTS.put("update_by", "Người thực hiện cập nhật bản ghi");
-        COMMENT_DEFAULTS.put("del_flag", "1: Đã xóa");
-        COMMENT_DEFAULTS.put("is_delete", "1: Đã xóa");
+        COMMENT_DEFAULTS.put("del_flag", "0: Chưa xóa, 1: Đã xóa");
+        COMMENT_DEFAULTS.put("is_delete", "0: Chưa xóa, 1: Đã xóa");
         COMMENT_DEFAULTS.put("BHYT_flag", "0: Không BHYT, 1: Có BHYT");
-        COMMENT_DEFAULTS.put("contract_id", "Mã hợp đồng \n" + lk + " \n  hpm_company_contract.contract_id");
-        COMMENT_DEFAULTS.put("company_id", "Mã công ty \n" + lk + " \n  hpm_company.id");
-        COMMENT_DEFAULTS.put("patient_id", "Mã bệnh nhân \n" + lk + " \n  hpm_patient.patient_id");
-        COMMENT_DEFAULTS.put("service_id", "Mã dịch vụ \n" + lk + " \n  hpm_service.service_id");
-        COMMENT_DEFAULTS.put("examine_time_id", "Mã lần khám \n" + lk + " \n  hpm_examine_time.id");
-        COMMENT_DEFAULTS.put("examine_id", "Mã lần khám \n" + lk + " \n  hpm_examine_time.id");
-        COMMENT_DEFAULTS.put("department_id", "Mã khoa phòng \n" + lk + " \n  hpm_department.id");
-        COMMENT_DEFAULTS.put("drug_id", "Mã thuốc, vật tư \n" + lk + " \n  hpm_drug.id");
-        COMMENT_DEFAULTS.put("unit_id", "Mã đơn vị thuốc, vật tư \n" + lk + " \n  hpm_unit.id");
-        COMMENT_DEFAULTS.put("how_use_id", "Mã cách dùng thuốc, vật tư \n" + lk + " \n  hpm_how_use.id");
-        COMMENT_DEFAULTS.put("use_unit_id", "Mã đơn vị sử dụng \n" + lk + " \n  hpm_drug_how_use.id");
-        COMMENT_DEFAULTS.put("group_cure_id", "Mã họ trị liệu \n" + lk + " \n  hpm_drug_group_cure.id");
-        COMMENT_DEFAULTS.put("city_id", "Id tỉnh thành trong db \n" + lk + " \n  hpm_city.city_id");
-        COMMENT_DEFAULTS.put("district_id", "Id quận huyện trong db \n" + lk + " \n  hpm_district.district_id");
-        COMMENT_DEFAULTS.put("invoice_id", "Mã phiếu thu \n" + lk + " \n  hpm_invoice.invoice_id");
-        COMMENT_DEFAULTS.put("inspect_id", "Mã phiếu cận lâm sàng \n" + lk + " \n  hpm_inspect.inspect_id");
-        COMMENT_DEFAULTS.put("job_id", "Mã nghề nghiệp \n" + lk + " \n  hpm_job.id");
-        COMMENT_DEFAULTS.put("non_resident_document_id", "Mã hồ sơ khám \n" + lk + " \n  hpm_nonresident_document.id");
-        COMMENT_DEFAULTS.put("non_resident_id", "Mã đợt khám \n" + lk + " \n  hpm_non_resident_id.non_resident_id");
-        COMMENT_DEFAULTS.put("settlement_payment_id", "Mã quyết toán \n" + lk + " \n  hpm_settlement_payment.settlement_payment_id");
-        COMMENT_DEFAULTS.put("nominate_id", "Mã phiếu chỉ định \n" + lk + " \n  hpm_nominate_list.nominate_id");
-        COMMENT_DEFAULTS.put("service_group_id", "Mã nhóm dịch vụ \n" + lk + " \n  hpm_service_group_type.id");
-        COMMENT_DEFAULTS.put("room_id", "Mã phòng khám \n" + lk + " \n  hpm_examine_room.id");
-        COMMENT_DEFAULTS.put("voucher_out_id", "Mã phiếu hóa đơn xuất \n" + lk + " \n  hpm_drug_voucher_out.voucher_out_id");
-        COMMENT_DEFAULTS.put("voucher_in_id", "Mã phiếu hóa đơn nhập \n" + lk + " \n  hpm_drug_voucher_in.voucher_in_id");
-        COMMENT_DEFAULTS.put("order_id", "Mã phiếu dự trù \n" + lk + " \n  hpm_drug_order.order_id");
-        COMMENT_DEFAULTS.put("invoice_retail_id", "Mã phiếu xuất thuốc \n" + lk + " \n  hpm_drug_invoice_retail.invoice_retail_id");
-        COMMENT_DEFAULTS.put("machine_id", "Mã máy \n" + lk + " \n  hpm_machine.machine_id");
-        COMMENT_DEFAULTS.put("position_id", "Mã vị trí nhân viên \n" + lk + " \n  hpm_position.id");
-        COMMENT_DEFAULTS.put("primary_surgery_doc_id", "Mã phiếu kỹ thuật thủ thuật \n" + lk + " \n  hpm_primary_surgery_document.primary_surgery_doc_id");
-        COMMENT_DEFAULTS.put("hospitalize_doc_id", "Mã nhập viện nội trú \n" + lk + " \n  hpm_hospitalize_document.id");
-        COMMENT_DEFAULTS.put("treaty_id", "Mã y lệnh, xử trí nội trú \n" + lk + " \n  hpm_resident_treaty.treaty_id");
-        COMMENT_DEFAULTS.put("case_record_id", "Mã hồ sơ khoa phòng nội trú \n" + lk + " \n  hpm_resident_case_record_document.case_record_id");
-        COMMENT_DEFAULTS.put("provider_id", "Mã nhà cung cấp\n" + lk + " \n  hpm_drug_provider.provider_id");
+        COMMENT_DEFAULTS.put("contract_id", "Mã hợp đồng \n" + lk + " \n hpm_company_contract.contract_id");
+        COMMENT_DEFAULTS.put("company_id", "Mã công ty \n" + lk + " \n hpm_company.id");
+        COMMENT_DEFAULTS.put("patient_id", "Mã bệnh nhân \n" + lk + " \n hpm_patient.patient_id");
+        COMMENT_DEFAULTS.put("service_id", "Mã dịch vụ \n" + lk + " \n hpm_service.service_id");
+        COMMENT_DEFAULTS.put("examine_time_id", "Mã lần khám \n" + lk + " \n hpm_examine_time.id");
+        COMMENT_DEFAULTS.put("examine_id", "Mã lần khám \n" + lk + " \n hpm_examine_time.id");
+        COMMENT_DEFAULTS.put("department_id", "Mã khoa phòng \n" + lk + " \n hpm_department.id");
+        COMMENT_DEFAULTS.put("drug_id", "Mã thuốc, vật tư \n" + lk + " \n hpm_drug.id");
+        COMMENT_DEFAULTS.put("unit_id", "Mã đơn vị thuốc, vật tư \n" + lk + " \n hpm_unit.id");
+        COMMENT_DEFAULTS.put("how_use_id", "Mã cách dùng thuốc, vật tư \n" + lk + " \n hpm_how_use.id");
+        COMMENT_DEFAULTS.put("use_unit_id", "Mã đơn vị sử dụng \n" + lk + " \n hpm_drug_how_use.id");
+        COMMENT_DEFAULTS.put("group_cure_id", "Mã họ trị liệu \n" + lk + " \n hpm_drug_group_cure.id");
+        COMMENT_DEFAULTS.put("city_id", "Id tỉnh thành trong db \n" + lk + " \n hpm_city.city_id");
+        COMMENT_DEFAULTS.put("district_id", "Id quận huyện trong db \n" + lk + " \n hpm_district.district_id");
+        COMMENT_DEFAULTS.put("invoice_id", "Mã phiếu thu \n" + lk + " \n hpm_invoice.invoice_id");
+        COMMENT_DEFAULTS.put("inspect_id", "Mã phiếu cận lâm sàng \n" + lk + " \n hpm_inspect.inspect_id");
+        COMMENT_DEFAULTS.put("job_id", "Mã nghề nghiệp \n" + lk + " \n hpm_job.id");
+        COMMENT_DEFAULTS.put("non_resident_document_id", "Mã hồ sơ khám \n" + lk + " \n hpm_nonresident_document.id");
+        COMMENT_DEFAULTS.put("non_resident_id", "Mã đợt khám \n" + lk + " \n hpm_non_resident_id.non_resident_id");
+        COMMENT_DEFAULTS.put("settlement_payment_id", "Mã quyết toán \n" + lk + " \n hpm_settlement_payment.settlement_payment_id");
+        COMMENT_DEFAULTS.put("nominate_id", "Mã phiếu chỉ định \n" + lk + " \n hpm_nominate_list.nominate_id");
+        COMMENT_DEFAULTS.put("service_group_id", "Mã nhóm dịch vụ \n" + lk + " \n hpm_service_group_type.id");
+        COMMENT_DEFAULTS.put("room_id", "Mã phòng khám \n" + lk + " \n hpm_examine_room.id");
+        COMMENT_DEFAULTS.put("voucher_out_id", "Mã phiếu hóa đơn xuất \n" + lk + " \n hpm_drug_voucher_out.voucher_out_id");
+        COMMENT_DEFAULTS.put("voucher_in_id", "Mã phiếu hóa đơn nhập \n" + lk + " \n hpm_drug_voucher_in.voucher_in_id");
+        COMMENT_DEFAULTS.put("order_id", "Mã phiếu dự trù \n" + lk + " \n hpm_drug_order.order_id");
+        COMMENT_DEFAULTS.put("invoice_retail_id", "Mã phiếu xuất thuốc \n" + lk + " \n hpm_drug_invoice_retail.invoice_retail_id");
+        COMMENT_DEFAULTS.put("machine_id", "Mã máy \n" + lk + " \n hpm_machine.machine_id");
+        COMMENT_DEFAULTS.put("position_id", "Mã vị trí nhân viên \n" + lk + " \n hpm_position.id");
+        COMMENT_DEFAULTS.put("primary_surgery_doc_id", "Mã phiếu kỹ thuật thủ thuật \n" + lk + " \n hpm_primary_surgery_document.primary_surgery_doc_id");
+        COMMENT_DEFAULTS.put("hospitalize_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
+        COMMENT_DEFAULTS.put("treaty_id", "Mã y lệnh, xử trí nội trú \n" + lk + " \n hpm_resident_treaty.treaty_id");
+        COMMENT_DEFAULTS.put("case_record_id", "Mã hồ sơ khoa phòng nội trú \n" + lk + " \n hpm_resident_case_record_document.case_record_id");
+        COMMENT_DEFAULTS.put("provider_id", "Mã nhà cung cấp\n" + lk + " \n hpm_drug_provider.provider_id");
+        COMMENT_DEFAULTS.put("blood_id", "Mã máu\n" + lk + " \n hpm_blood.blood_id");
+        COMMENT_DEFAULTS.put("invoice_refund_id", "Mã phiếu hoàn phí\n" + lk + " \n hpm_drug_invoice_refund.invoice_refund_id");
+        COMMENT_DEFAULTS.put("liquidation_return_id", "Mã phiếu trả thuốc\n" + lk + " \n hpm_drug_liquidation_return.liquidation_return_id");
+        COMMENT_DEFAULTS.put("voucher_in_detail_id", "Mã chi tiết phiếu nhập thuốc\n" + lk + " \n hpm_drug_voucher_in_detail.id");
+        COMMENT_DEFAULTS.put("root_voucher_in_id", "Mã phiếu nhập ban đầu của thuốc vào Kho chẵn\n" + lk + " \n hpm_drug_voucher_in.voucher_in_id");
+        COMMENT_DEFAULTS.put("restitution_id", "Mã phiếu trả thuốc\n" + lk + " \n hpm_drug_restitution.restitution_id");
+
+
+        COMMENT_DEFAULTS.put("invoice_department_id", lk + " \n hpm_drug_invoice_department.invoice_department_id");
+        COMMENT_DEFAULTS.put("invoice_department_detail_id", lk + " \n hpm_drug_invoice_department_detail.id");
     }
 
     private final static String[] TABLE_ON_DB = {"invoice_vat", "invoice_vat_detail", "invoice_vat_link"};
