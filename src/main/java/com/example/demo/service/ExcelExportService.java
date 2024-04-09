@@ -398,20 +398,26 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("job_id", "Mã nghề nghiệp \n" + lk + " \n hpm_job.id");
         COMMENT_DEFAULTS.put("non_resident_document_id", "Mã hồ sơ khám \n" + lk + " \n hpm_nonresident_document.id");
         COMMENT_DEFAULTS.put("non_resident_id", "Mã đợt khám \n" + lk + " \n hpm_non_resident_id.non_resident_id");
+        COMMENT_DEFAULTS.put("resident_id", "Mã hồ sơ nội trú \n" + lk + " \n hpm_resident_document.resident_id");
         COMMENT_DEFAULTS.put("settlement_payment_id", "Mã quyết toán \n" + lk + " \n hpm_settlement_payment.settlement_payment_id");
         COMMENT_DEFAULTS.put("nominate_id", "Mã phiếu chỉ định \n" + lk + " \n hpm_nominate_list.nominate_id");
         COMMENT_DEFAULTS.put("service_group_id", "Mã nhóm dịch vụ \n" + lk + " \n hpm_service_group_type.id");
+        COMMENT_DEFAULTS.put("service_detail_id", "Mã dịch vụ chi tiết \n" + lk + " \n hpm_service_detail.id");
         COMMENT_DEFAULTS.put("room_id", "Mã phòng khám \n" + lk + " \n hpm_examine_room.id");
         COMMENT_DEFAULTS.put("voucher_out_id", "Mã phiếu hóa đơn xuất \n" + lk + " \n hpm_drug_voucher_out.voucher_out_id");
+        COMMENT_DEFAULTS.put("voucher_out_detail_id", "Chi tiết hóa đơn xuất \n" + lk + " \n hpm_drug_voucher_out_detail.id");
         COMMENT_DEFAULTS.put("voucher_in_id", "Mã phiếu hóa đơn nhập \n" + lk + " \n hpm_drug_voucher_in.voucher_in_id");
+        COMMENT_DEFAULTS.put("voucher_in_detail_id", "Chi tiết hóa đơn nhập \n" + lk + " \n hpm_drug_voucher_in_detail.id");
         COMMENT_DEFAULTS.put("order_id", "Mã phiếu dự trù \n" + lk + " \n hpm_drug_order.order_id");
         COMMENT_DEFAULTS.put("invoice_retail_id", "Mã phiếu xuất thuốc \n" + lk + " \n hpm_drug_invoice_retail.invoice_retail_id");
         COMMENT_DEFAULTS.put("machine_id", "Mã máy \n" + lk + " \n hpm_machine.machine_id");
         COMMENT_DEFAULTS.put("position_id", "Mã vị trí nhân viên \n" + lk + " \n hpm_position.id");
         COMMENT_DEFAULTS.put("primary_surgery_doc_id", "Mã phiếu kỹ thuật thủ thuật \n" + lk + " \n hpm_primary_surgery_document.primary_surgery_doc_id");
         COMMENT_DEFAULTS.put("hospitalize_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
+        COMMENT_DEFAULTS.put("hospitalized_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
+        COMMENT_DEFAULTS.put("hos_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
         COMMENT_DEFAULTS.put("treaty_id", "Mã y lệnh, xử trí nội trú \n" + lk + " \n hpm_resident_treaty.treaty_id");
-        COMMENT_DEFAULTS.put("case_record_id", "Mã hồ sơ khoa phòng nội trú \n" + lk + " \n hpm_resident_case_record_document.case_record_id");
+        COMMENT_DEFAULTS.put("case_record_id", "Mã bệnh án nội trú \n" + lk + " \n hpm_resident_case_record_document.case_record_id");
         COMMENT_DEFAULTS.put("provider_id", "Mã nhà cung cấp\n" + lk + " \n hpm_drug_provider.provider_id");
         COMMENT_DEFAULTS.put("blood_id", "Mã máu\n" + lk + " \n hpm_blood.blood_id");
         COMMENT_DEFAULTS.put("invoice_refund_id", "Mã phiếu hoàn phí\n" + lk + " \n hpm_drug_invoice_refund.invoice_refund_id");
@@ -419,10 +425,18 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("voucher_in_detail_id", "Mã chi tiết phiếu nhập thuốc\n" + lk + " \n hpm_drug_voucher_in_detail.id");
         COMMENT_DEFAULTS.put("root_voucher_in_id", "Mã phiếu nhập ban đầu của thuốc vào Kho chẵn\n" + lk + " \n hpm_drug_voucher_in.voucher_in_id");
         COMMENT_DEFAULTS.put("restitution_id", "Mã phiếu trả thuốc\n" + lk + " \n hpm_drug_restitution.restitution_id");
+        COMMENT_DEFAULTS.put("receiving_id", "Mã phiếu tiếp nhận\n" + lk + " \n hpm_patient_recieving.receiving_id");
+        COMMENT_DEFAULTS.put("order_form_id", "Mã phiếu đặt hàng\n" + lk + " \n hpm_order_form.order_form_id");
+        COMMENT_DEFAULTS.put("primary_surgery_doc_id", "Mã phiếu thủ thuật\n" + lk + " \n hpm_primary_surgery_document.primary_surgery_doc_id");
+        COMMENT_DEFAULTS.put("primary_surgery_method_doc_id", "Mã phiếu thủ thuật\n" + lk + " \n hpm_primary_surgery_method_list.id");
+        COMMENT_DEFAULTS.put("position_surgery_list_id", "Mã vị trí thủ thuật\n" + lk + " \n hpm_position_surgery_list.id");
+        COMMENT_DEFAULTS.put("anaethesia_method_id", "Mã phương pháp vô cảm\n" + lk + " \n hpm_anaethesia_method_list.id");
+        COMMENT_DEFAULTS.put("decubitus_surgery_id", "Mã tư thế thủ thuật\n" + lk + " \n hpm_decubitus_surgery_list.id");
 
 
         COMMENT_DEFAULTS.put("invoice_department_id", lk + " \n hpm_drug_invoice_department.invoice_department_id");
         COMMENT_DEFAULTS.put("invoice_department_detail_id", lk + " \n hpm_drug_invoice_department_detail.id");
+
     }
 
     private final static String[] TABLE_ON_DB = {"invoice_vat", "invoice_vat_detail", "invoice_vat_link"};
