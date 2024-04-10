@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mybatis.mapper.TableMapper">
+	<select id="getTables" resultType="TableEntity">	
+		SELECT
+			tmp.TABLE_NAME HREF_NAME,
+			t.* 
+		FROM
+			information_schema.TABLES t
+			LEFT JOIN (
+				SELECT * FROM information_schema.tables WHERE TABLE_SCHEMA = 'flex_anphu' ORDER BY TABLE_NAME
+			) tmp ON t.TABLE_NAME = CONCAT(tmp.TABLE_NAME, '_detail') OR tmp.TABLE_NAME = CONCAT(t.TABLE_NAME, '_detail')
+		WHERE 
+			t.TABLE_SCHEMA = 'flex_anphu' 
+		ORDER BY
+			t.TABLE_NAME;
+  	</select>
+  	
+</mapper>

@@ -4,6 +4,7 @@ public class TableEntity {
     private String TABLE_CATALOG;
     private String TABLE_SCHEMA;
     private String TABLE_NAME;
+    private String HREF_NAME;
     private String TABLE_TYPE;
     private String ENGINE;
     private String VERSION;
@@ -22,6 +23,13 @@ public class TableEntity {
     private String CHECKSUM;
     private String CREATE_OPTIONS;
     private String TABLE_COMMENT;
+
+    public String getHREF_NAME() {
+        return HREF_NAME;
+    }
+    public void setHREF_NAME(String hREF_NAME) {
+        HREF_NAME = hREF_NAME;
+    }
 
     public String getTABLE_CATALOG() {
         return TABLE_CATALOG;

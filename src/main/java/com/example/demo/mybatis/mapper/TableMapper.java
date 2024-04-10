@@ -14,7 +14,7 @@ import com.example.demo.mybatis.model.TableEntity;
 @Mapper
 public interface TableMapper {
 
-    @Select("SELECT * FROM information_schema.tables WHERE table_schema = 'flex_anphu' ORDER BY TABLE_NAME;") 
+    // @Select("SELECT * FROM information_schema.tables WHERE table_schema = 'flex_anphu' ORDER BY TABLE_NAME;") 
     List<TableEntity> getTables(); 
 
     @Select("SELECT\r\n" + //

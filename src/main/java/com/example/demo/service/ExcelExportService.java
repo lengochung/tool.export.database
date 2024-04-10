@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.mybatis.model.TableDetail;
 import com.example.demo.mybatis.model.TableEntity;
 import com.example.demo.mybatis.service.TableService;
+import com.example.demo.utils.Lib;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,7 +44,7 @@ public class ExcelExportService {
 
     private String[] TABLE_HEADS = {
         "No", "Table type", "English Naming", "Instances",
-        "owner", "View", "Size", "Table Description"
+        "owner", "View", "Size", "Table Description", "Href Table"
     };
 
     /**
@@ -133,6 +134,14 @@ public class ExcelExportService {
                         case 5: value = "No"; sheet.setColumnWidth(i, 2500);break;
                         case 6: value = table.getTABLE_ROWS() ; sheet.setColumnWidth(i, 4000); cell.setCellStyle(styleNumber);break;
                         case 7: value = table.getTABLE_COMMENT() ; sheet.setColumnWidth(i, 12000);break;
+                        case 8:
+                            value = table.getHREF_NAME() ; sheet.setColumnWidth(i, 12000);
+                            if(!Lib.isBlank(value)) {
+                                Hyperlink hyperlinkHref = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
+                                hyperlinkHref.setAddress("'" + this.cutTablename(value) + "'!A1");
+                                cell.setHyperlink(hyperlinkHref);
+                            }
+                            break;
                     
                         default:
                             break;
@@ -210,8 +219,9 @@ public class ExcelExportService {
         Cell cell00 = row0.createCell(0);
         Hyperlink hyperlink = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
         hyperlink.setAddress("'" + SHEET_TABLE_LIST + "'!A" + (rowTABLE + 1));
-        cell00.setCellValue("Back");
+        cell00.setCellValue("←");
         cell00.setHyperlink(hyperlink);
+        cell00.setCellStyle(styleCC);
 
         Cell cell01 = row0.createCell(1);
         cell01.setCellValue("Table Name");
@@ -364,7 +374,10 @@ public class ExcelExportService {
 
         if(commend == null || commend.equals("")) return column.getCOLUMN_COMMENT();
 
-        return commend;
+        String final_comment = Lib.isBlank(column.getCOLUMN_COMMENT()) ? "" : column.getCOLUMN_COMMENT() + "\n";
+               final_comment += commend;
+
+        return final_comment;
     }
 
     private HashMap<String, String> COMMENT_DEFAULTS = new HashMap<>();
@@ -377,6 +390,7 @@ public class ExcelExportService {
         // COMMENT_DEFAULTS.put("update_date", "Thời điểm thực hiện cập nhật bản ghi");
         // COMMENT_DEFAULTS.put("update_by", "Người thực hiện cập nhật bản ghi");
         COMMENT_DEFAULTS.put("del_flag", "0: Chưa xóa, 1: Đã xóa");
+        COMMENT_DEFAULTS.put("del_reason", "Lý do xóa");
         COMMENT_DEFAULTS.put("is_delete", "0: Chưa xóa, 1: Đã xóa");
         COMMENT_DEFAULTS.put("BHYT_flag", "0: Không BHYT, 1: Có BHYT");
         COMMENT_DEFAULTS.put("contract_id", "Mã hợp đồng \n" + lk + " \n hpm_company_contract.contract_id");
@@ -387,6 +401,7 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("examine_id", "Mã lần khám \n" + lk + " \n hpm_examine_time.id");
         COMMENT_DEFAULTS.put("department_id", "Mã khoa phòng \n" + lk + " \n hpm_department.id");
         COMMENT_DEFAULTS.put("drug_id", "Mã thuốc, vật tư \n" + lk + " \n hpm_drug.id");
+        COMMENT_DEFAULTS.put("perfusion_id", "Mã thuốc, dịch truyền \n" + lk + " \n hpm_drug.id");
         COMMENT_DEFAULTS.put("unit_id", "Mã đơn vị thuốc, vật tư \n" + lk + " \n hpm_unit.id");
         COMMENT_DEFAULTS.put("how_use_id", "Mã cách dùng thuốc, vật tư \n" + lk + " \n hpm_how_use.id");
         COMMENT_DEFAULTS.put("use_unit_id", "Mã đơn vị sử dụng \n" + lk + " \n hpm_drug_how_use.id");
@@ -399,7 +414,7 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("non_resident_document_id", "Mã hồ sơ khám \n" + lk + " \n hpm_nonresident_document.id");
         COMMENT_DEFAULTS.put("non_resident_id", "Mã đợt khám \n" + lk + " \n hpm_non_resident_id.non_resident_id");
         COMMENT_DEFAULTS.put("resident_id", "Mã hồ sơ nội trú \n" + lk + " \n hpm_resident_document.resident_id");
-        COMMENT_DEFAULTS.put("settlement_payment_id", "Mã quyết toán \n" + lk + " \n hpm_settlement_payment.settlement_payment_id");
+        COMMENT_DEFAULTS.put("settlement_payment_id", "Mã phiếu quyết toán \n" + lk + " \n hpm_settlement_payment.settlement_payment_id");
         COMMENT_DEFAULTS.put("nominate_id", "Mã phiếu chỉ định \n" + lk + " \n hpm_nominate_list.nominate_id");
         COMMENT_DEFAULTS.put("service_group_id", "Mã nhóm dịch vụ \n" + lk + " \n hpm_service_group_type.id");
         COMMENT_DEFAULTS.put("service_detail_id", "Mã dịch vụ chi tiết \n" + lk + " \n hpm_service_detail.id");
@@ -416,7 +431,7 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("hospitalize_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
         COMMENT_DEFAULTS.put("hospitalized_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
         COMMENT_DEFAULTS.put("hos_doc_id", "Mã nhập viện nội trú \n" + lk + " \n hpm_hospitalize_document.id");
-        COMMENT_DEFAULTS.put("treaty_id", "Mã y lệnh, xử trí nội trú \n" + lk + " \n hpm_resident_treaty.treaty_id");
+        COMMENT_DEFAULTS.put("treaty_id", "Mã y lệnh, xử trí điều trị nội trú \n" + lk + " \n hpm_resident_treaty.treaty_id");
         COMMENT_DEFAULTS.put("case_record_id", "Mã bệnh án nội trú \n" + lk + " \n hpm_resident_case_record_document.case_record_id");
         COMMENT_DEFAULTS.put("provider_id", "Mã nhà cung cấp\n" + lk + " \n hpm_drug_provider.provider_id");
         COMMENT_DEFAULTS.put("blood_id", "Mã máu\n" + lk + " \n hpm_blood.blood_id");
@@ -432,6 +447,10 @@ public class ExcelExportService {
         COMMENT_DEFAULTS.put("position_surgery_list_id", "Mã vị trí thủ thuật\n" + lk + " \n hpm_position_surgery_list.id");
         COMMENT_DEFAULTS.put("anaethesia_method_id", "Mã phương pháp vô cảm\n" + lk + " \n hpm_anaethesia_method_list.id");
         COMMENT_DEFAULTS.put("decubitus_surgery_id", "Mã tư thế thủ thuật\n" + lk + " \n hpm_decubitus_surgery_list.id");
+        COMMENT_DEFAULTS.put("surgery_method_id", "Mã phương pháp mổ\n" + lk + " \n hpm_primary_surgery_method_list.id");
+        COMMENT_DEFAULTS.put("nursing_take_care_id", "Mã chăm sóc\n" + lk + " \n hpm_nursing_take_care.id");
+        COMMENT_DEFAULTS.put("surgery_anesthesia_doc_id", "Mã phiếu gây mê\n" + lk + " \n hpm_surgery_anesthesia_document.surgery_anesthesia_doc_id");
+        COMMENT_DEFAULTS.put("examine_room_id", "Mã phòng khám\n" + lk + " \n hpm_surgery_anesthesia_document.surgery_anesthesia_doc_id");
 
 
         COMMENT_DEFAULTS.put("invoice_department_id", lk + " \n hpm_drug_invoice_department.invoice_department_id");

@@ -42,4 +42,8 @@ public final class Lib {
 			return null;
 		}
 	}
+
+	public static boolean isBlank (String object) {
+		return object == null || object.equals("") || object.length() == 0;
+	}
 }
