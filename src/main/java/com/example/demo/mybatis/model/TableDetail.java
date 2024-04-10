@@ -29,6 +29,13 @@ public class TableDetail {
     private String COLUMN_COMMENT;
     private String GENERATION_EXPRESSION;
     private String SRS_ID;
+    private String APPEAR_ON;
+    public String getAPPEAR_ON() {
+        return APPEAR_ON;
+    }
+    public void setAPPEAR_ON(String aPPEAR_ON) {
+        APPEAR_ON = aPPEAR_ON;
+    }
     private List<Integer> SEQ_IN_INDEX = new ArrayList<Integer>();
     public List<Integer> getSEQ_IN_INDEX() {
         return SEQ_IN_INDEX;

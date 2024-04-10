@@ -275,6 +275,11 @@ public class ExcelExportService {
             cell.setCellStyle(styleCCB);
         }
 
+        Cell cellH = row3.createCell(DETAIL_HEAD_INDEX.length + DETAIL_HEAD.length - 1);
+        cellH.setCellValue("ALSO APEAR IN");
+        cellH.setCellStyle(style);
+        cellH.setCellStyle(styleCCB);
+
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 0, 0));
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 1, 1));
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 2, 2));
@@ -334,12 +339,25 @@ public class ExcelExportService {
                 cell.setCellValue(value);
                 j++;
             }
+
+            Cell cellAPEAR_ON = row.createCell(j);
+            cellAPEAR_ON.setCellStyle(style);
+            cellAPEAR_ON.setCellValue(this.APEAR_ON(column) ? "" : column.getAPPEAR_ON());
+            sheet.setColumnWidth(j, 10000);
         }
 
         row0.setHeightInPoints(height);
         row1.setHeightInPoints(height);
         row2.setHeightInPoints(height);
         row3.setHeightInPoints(height);
+    }
+
+    private final static String[] field_defaults = {"id","headquarter_id","create_by","create_date","update_by","update_date"};
+    private boolean APEAR_ON (TableDetail column) { 
+        for (int i = 0; i < field_defaults.length; i++) {
+            if(column.getCOLUMN_NAME().equals(field_defaults[i])) return true;
+        }
+        return false;
     }
 
     private void createBlankCell (Row row, CellStyle style) {
