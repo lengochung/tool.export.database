@@ -1,5 +1,8 @@
 package com.example.demo.mybatis.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableEntity {
     private String TABLE_CATALOG;
     private String TABLE_SCHEMA;
@@ -24,6 +27,14 @@ public class TableEntity {
     private String CREATE_OPTIONS;
     private String TABLE_COMMENT;
 
+    private List<String> table_in = new ArrayList<>(); 
+
+    public List<String> getTable_in() {
+        return table_in;
+    }
+    public void setTable_in(List<String> table_in) {
+        this.table_in = table_in; 
+    }
     public String getHREF_NAME() {
         return HREF_NAME;
     }
@@ -156,5 +167,11 @@ public class TableEntity {
     }
     public void setTABLE_COMMENT(String tABLE_COMMENT) {
         TABLE_COMMENT = tABLE_COMMENT;
+    }
+    public String[] getTABLE_IN() {
+        return TABLE_IN;
+    }
+    public void setTABLE_IN(String[] tABLE_IN) {
+        TABLE_IN = tABLE_IN;
     }
 }

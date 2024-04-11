@@ -20,9 +20,9 @@ public class TableImp implements TableService {
         return this.tableMapper.getTables();
     }
     @Override
-    public List<TableDetail> getTableDetail(String table_name) {
+    public List<TableDetail> getTableDetail(TableEntity table) {
         // TODO Auto-generated method stub
-        return this.tableMapper.getTableDetail(table_name);
+        return this.tableMapper.getTableDetail(table);
     }
     
 }

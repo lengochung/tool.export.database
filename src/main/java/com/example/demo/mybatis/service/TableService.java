@@ -8,5 +8,5 @@ import com.example.demo.mybatis.model.TableEntity;
 
 public interface TableService {
     List<TableEntity> getTables(); 
-    List<TableDetail> getTableDetail(String table_name); 
+    List<TableDetail> getTableDetail(TableEntity table);
 }

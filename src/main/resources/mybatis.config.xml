@@ -13,4 +13,5 @@
         <typeAlias type="com.example.demo.mybatis.model.TableEntity" alias="TableEntity"/>
         <typeAlias type="com.example.demo.mybatis.model.TableDetail" alias="TableDetail"/>
     </typeAliases>
+    
 </configuration>

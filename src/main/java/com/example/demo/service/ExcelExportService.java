@@ -4,6 +4,7 @@ import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.sql.results.LoadingLogger_.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.example.demo.mybatis.model.TableDetail;
@@ -14,6 +15,7 @@ import com.example.demo.utils.Lib;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -117,7 +119,9 @@ public class ExcelExportService {
             Hyperlink hyperlink = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
             hyperlink.setAddress("'" + this.cutTablename(table.getTABLE_NAME()) + "'!A1"); // Định vị đến cell A1 trên Sheet2
             // Tạo sheet detail trước
-            try {           
+            try { 
+                List<String> tableInList = Arrays.asList(TABLE_ON_DB);
+                table.setTable_in(tableInList);      
                 this.createTableDetail(workbook, table, style, createHelper, r);
                 Row row = sheet.createRow(r++);
                 row.setHeightInPoints(30);
@@ -135,7 +139,7 @@ public class ExcelExportService {
                         case 6: value = table.getTABLE_ROWS() ; sheet.setColumnWidth(i, 4000); cell.setCellStyle(styleNumber);break;
                         case 7: value = table.getTABLE_COMMENT() ; sheet.setColumnWidth(i, 12000);break;
                         case 8:
-                            value = table.getHREF_NAME() ; sheet.setColumnWidth(i, 12000);
+                            value = table.getHREF_NAME(); sheet.setColumnWidth(i, 12000);
                             if(!Lib.isBlank(value)) {
                                 Hyperlink hyperlinkHref = createHelper.createHyperlink(HyperlinkType.DOCUMENT);
                                 hyperlinkHref.setAddress("'" + this.cutTablename(value) + "'!A1");
@@ -149,7 +153,7 @@ public class ExcelExportService {
                     cell.setCellValue(value);                
                 }
                 stt++;
-            } catch (Exception e) {
+            } catch (Exception e) { 
                 continue;
             }
         }
@@ -211,7 +215,7 @@ public class ExcelExportService {
 
 
         int height = 20;
-        List<TableDetail> columns = this._tableService.getTableDetail(table.getTABLE_NAME());
+        List<TableDetail> columns = this._tableService.getTableDetail(table);
         Sheet sheet = workbook.createSheet(this.cutTablename(table.getTABLE_NAME()));
 
         Row row0 = sheet.createRow(0);
