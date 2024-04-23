@@ -4,7 +4,6 @@ import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.hibernate.sql.results.LoadingLogger_.logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.example.demo.mybatis.model.TableDetail;
@@ -136,7 +135,7 @@ public class ExcelExportService {
                         case 3: value = "FlexClinic"; sheet.setColumnWidth(i, 4000);break;
                         case 4: value = "Flex"; sheet.setColumnWidth(i, 3000);break;
                         case 5: value = "No"; sheet.setColumnWidth(i, 2500);break;
-                        case 6: value = table.getTABLE_ROWS() ; sheet.setColumnWidth(i, 4000); cell.setCellStyle(styleNumber);break;
+                        case 6: value = table.getROW_SIZE() ; sheet.setColumnWidth(i, 4000); cell.setCellStyle(styleNumber);break;
                         case 7: value = table.getTABLE_COMMENT() ; sheet.setColumnWidth(i, 12000);break;
                         case 8:
                             value = table.getHREF_NAME(); sheet.setColumnWidth(i, 12000);
@@ -252,7 +251,7 @@ public class ExcelExportService {
         cell2.setCellValue("No");
         cell2.setCellStyle(style);
         Cell cell3 = row1.createCell(5);
-        cell3.setCellValue(table.getTABLE_ROWS());
+        cell3.setCellValue(table.getROW_SIZE());
         cell3.setCellStyle(styleNumber);
         Cell cell4 = row1.createCell(10); 
         cell4.setCellStyle(style);
@@ -279,10 +278,10 @@ public class ExcelExportService {
             cell.setCellStyle(styleCCB);
         }
 
-        Cell cellH = row3.createCell(DETAIL_HEAD_INDEX.length + DETAIL_HEAD.length - 1);
-        cellH.setCellValue("ALSO APEAR IN");
-        cellH.setCellStyle(style);
-        cellH.setCellStyle(styleCCB);
+        // Cell cellH = row3.createCell(DETAIL_HEAD_INDEX.length + DETAIL_HEAD.length - 1);
+        // cellH.setCellValue("ALSO APEAR IN");
+        // cellH.setCellStyle(style);
+        // cellH.setCellStyle(styleCCB);
 
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 0, 0));
         sheet.addMergedRegion(new CellRangeAddress(2, 3, 1, 1));
@@ -344,10 +343,10 @@ public class ExcelExportService {
                 j++;
             }
 
-            Cell cellAPEAR_ON = row.createCell(j);
-            cellAPEAR_ON.setCellStyle(style);
-            cellAPEAR_ON.setCellValue(this.APEAR_ON(column) ? "" : column.getAPPEAR_ON());
-            sheet.setColumnWidth(j, 10000);
+            // Cell cellAPEAR_ON = row.createCell(j);
+            // cellAPEAR_ON.setCellStyle(style);
+            // cellAPEAR_ON.setCellValue(this.APEAR_ON(column) ? "" : column.getAPPEAR_ON());
+            // sheet.setColumnWidth(j, 10000);
         }
 
         row0.setHeightInPoints(height);

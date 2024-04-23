@@ -4,12 +4,47 @@
 	<select id="getTables" resultType="TableEntity">	
 		SELECT
 			tmp.TABLE_NAME HREF_NAME,
+			IFNULL(tmp_size.ROW_SIZE, 0) ROW_SIZE,
 			t.* 
 		FROM
 			information_schema.TABLES t
 			LEFT JOIN (
 				SELECT * FROM information_schema.tables WHERE TABLE_SCHEMA = 'flex_anphu' ORDER BY TABLE_NAME
 			) tmp ON t.TABLE_NAME = CONCAT(tmp.TABLE_NAME, '_detail') OR tmp.TABLE_NAME = CONCAT(t.TABLE_NAME, '_detail')
+			LEFT JOIN (
+				SELECT
+					TABLE_NAME, 
+					SUM(
+						CASE 
+							WHEN DATA_TYPE = 'varchar' THEN CHARACTER_MAXIMUM_LENGTH * 1
+							WHEN DATA_TYPE = 'char' THEN CHARACTER_MAXIMUM_LENGTH * 1
+							WHEN DATA_TYPE = 'tinytext' THEN 255
+							WHEN DATA_TYPE = 'text' THEN 65535
+							WHEN DATA_TYPE = 'mediumtext' THEN 16777215
+							WHEN DATA_TYPE = 'longtext' THEN 4294967295
+							WHEN DATA_TYPE = 'tinyint' THEN 1
+							WHEN DATA_TYPE = 'smallint' THEN 2
+							WHEN DATA_TYPE = 'mediumint' THEN 3
+							WHEN DATA_TYPE = 'int' THEN 4
+							WHEN DATA_TYPE = 'bigint' THEN 8
+							WHEN DATA_TYPE = 'float' THEN 4
+							WHEN DATA_TYPE = 'double' THEN 8
+							WHEN DATA_TYPE = 'decimal' THEN (CASE WHEN NUMERIC_PRECISION IS NOT NULL THEN NUMERIC_PRECISION ELSE 10 END) + 1
+							WHEN DATA_TYPE = 'date' THEN 3
+							WHEN DATA_TYPE = 'datetime' THEN 8
+							WHEN DATA_TYPE = 'timestamp' THEN 4
+							WHEN DATA_TYPE = 'time' THEN 3
+							WHEN DATA_TYPE = 'year' THEN 1
+							ELSE 0
+						END
+					) AS ROW_SIZE
+				FROM 
+					INFORMATION_SCHEMA.COLUMNS
+				WHERE 
+					TABLE_SCHEMA = 'flex_anphu'
+				GROUP BY
+					TABLE_NAME
+			) tmp_size ON t.TABLE_NAME = tmp_size.TABLE_NAME
 		WHERE 
 			t.TABLE_SCHEMA = 'flex_anphu' 
 		ORDER BY

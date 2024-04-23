@@ -26,7 +26,14 @@ public class TableEntity {
     private String CHECKSUM;
     private String CREATE_OPTIONS;
     private String TABLE_COMMENT;
+    private String ROW_SIZE;
 
+    public String getROW_SIZE() {
+        return ROW_SIZE;
+    }
+    public void setROW_SIZE(String rOW_SIZE) {
+        ROW_SIZE = rOW_SIZE;
+    }
     private List<String> table_in = new ArrayList<>(); 
 
     public List<String> getTable_in() {
@@ -167,11 +174,5 @@ public class TableEntity {
     }
     public void setTABLE_COMMENT(String tABLE_COMMENT) {
         TABLE_COMMENT = tABLE_COMMENT;
-    }
-    public String[] getTABLE_IN() {
-        return TABLE_IN;
-    }
-    public void setTABLE_IN(String[] tABLE_IN) {
-        TABLE_IN = tABLE_IN;
     }
 }
