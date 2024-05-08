@@ -26,6 +26,16 @@ public class ExcelExportService {
     private static final String FILENAME = "MySql_System_db_desig.xlsx";
     private static final String SHEET_TABLE_LIST = "Table List";
 
+    /**
+     * Table mà anh Khanh đã sắp xếp thứ tự rồi và tô màu vàng
+     */
+    private static final String[] TABLE_NONE = {
+        "hpm_non_resident_id",
+        "hpm_patient",
+        "hpm_patient_health_insurance",
+        "hpm_patient_receiving"
+    };
+
     @Autowired
     TableService _tableService;
 

@@ -21,7 +21,7 @@ public class HelloController {
 
     @GetMapping("/run")
     public String export() throws IOException {     
-        this.excelExportService.exportDataToExcel();
+        this.excelExportService.exportDataToExcel(); 
         return "DONE!";
     }
 }
